@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Batch Video Downloader",
+    "description": "This extension allows batch downloading of videos.",
+    "version": "1.0",
+  
+    "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html",
+      "default_title": "Click here!"
+    },
+    "permissions": [
+      "activeTab",
+      "storage",
+      "downloads",
+      "tabs",
+      "webNavigation",
+      "*://*/*"
+    ]
+  }
