@@ -3,6 +3,7 @@ var frontendmastersDownloader = function () {
     var index = 0;
     var workingTabId = null;
     var currentUrl = null;
+    var currentDownloadId = null;
 
     function changeCurrentTabUrl(tabId) {
         if (globalLinks.length > 0) {
@@ -30,8 +31,8 @@ var frontendmastersDownloader = function () {
             console.log(result);
             if (result && result.length > 0) {
                 if(result[0] != "") {
-                    chromeApi.downLoadVideo(result[0], `${videoName}.webm`, function (downloadItem) {
-                        changeCurrentTabUrl(tabId);
+                    chromeApi.downLoadVideo(result[0], `${videoName}.webm`, function (downloadId) {
+                        currentDownloadId = downloadId;
                     });
                 } else {
                     setTimeout(() => {
@@ -42,9 +43,9 @@ var frontendmastersDownloader = function () {
         });
     }
 
-    function onDownloadChanged(videoInfo) {
-        if (videoInfo.state) {
-            console.log(videoInfo.state);
+    function onDownloadChanged(downloadInfo) {
+        if (downloadInfo.id === currentDownloadId && downloadInfo.state && downloadInfo.state.current === "complete") {
+            changeCurrentTabUrl(workingTabId);
         }
     }
 
