@@ -12,6 +12,7 @@ var wistiaDownloader = function () {
     var index = 0;
     var workingTabId = null;
     var titlesMap = null;
+    var currentDownloadId = null;
 
     function changeCurrentTabUrl(tabId) {
         if (globalLinks.length > 0) {
@@ -45,11 +46,17 @@ var wistiaDownloader = function () {
 
             chromeApi.executeScript(tabId, getVideoLinkScript, function (result) {
             if (result && result.length > 0) {
-                chromeApi.downLoadVideo(`${result[0][0]}.mp4`, `${videoName}.mp4`, function (downloadItem) {
-                    changeCurrentTabUrl(tabId);
+                chromeApi.downLoadVideo(`${result[0][0]}.mp4`, `${videoName}.mp4`, function (downloadId) {                    
+                    currentDownloadId = downloadId;
                 });
             }
         });
+    }    
+
+    function onDownloadChanged(downloadInfo) {
+        if (downloadInfo.id === currentDownloadId && downloadInfo.state && downloadInfo.state.current === "complete") {
+            changeCurrentTabUrl(workingTabId);
+        }
     }
 
     return {
