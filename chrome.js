@@ -8,6 +8,8 @@ var chromeApi = function () {
             chrome.tabs.executeScript(tabId, { code: script }, callback);
         },
         changeCurrentTabUrl: function (tabId, link) {
+            console.log(url);
+            console.log(tabId);
             chrome.tabs.update(tabId, { url: link });
         },
         getCurrentTabUrl: function (callback, startIndex = 1) {
