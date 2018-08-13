@@ -9,7 +9,6 @@ var pluralsightDownloader = function () {
     function changeModule(tabId) {
         if (moduleElements.length > 0) {
             currentModule = moduleElements.shift();
-            console.log(currentModule);
             
             var clickModule = `            
                 var module = Array.prototype.map.call(
@@ -39,7 +38,6 @@ var pluralsightDownloader = function () {
                         } else {
                             currentModuleLinks = [];
                         }
-                        console.log(currentModuleLinks);
                         changeLesson(tabId);
                     });
                 
@@ -69,11 +67,7 @@ var pluralsightDownloader = function () {
 
                 chromeApi.executeScript(tabId, clickLesson, function (result) {
                     var lesson = result[0].replace(/[^a-zA-Z ]/g, "").replace('m s', "");
-                    console.log(lesson);
-                    // downloadVideo(tabId, `Module_${currentModule}_${lesson}`);
-                   setTimeout(() => {                    
-                        changeLesson(tabId);
-                    }, 10000);
+                    downloadVideo(tabId, `Module_${currentModule}_${lesson}`);
                 });
         } else {
             changeModule(tabId);
@@ -121,7 +115,6 @@ var pluralsightDownloader = function () {
                 if (result.length > 0) {
                     moduleElements = index > 1 ? result[0].slice(index - 1) : result[0];
                     if (moduleElements.length > 0) {
-                        console.log(moduleElements);
                         changeModule(tabId);
                     }
                 }
