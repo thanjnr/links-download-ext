@@ -67,7 +67,9 @@ var pluralsightDownloader = function () {
 
                 chromeApi.executeScript(tabId, clickLesson, function (result) {
                     var lesson = result[0].replace(/[^a-zA-Z ]/g, "").replace('m s', "");
-                    downloadVideo(tabId, `Module_${currentModule}_${lesson}`);
+                    setTimeout(() => {                        
+                        downloadVideo(tabId, `Module-${currentModule+1}.${currentLesson+1}_${lesson}`);
+                    }, 10000);
                 });
         } else {
             changeModule(tabId);
@@ -115,6 +117,7 @@ var pluralsightDownloader = function () {
                 if (result.length > 0) {
                     moduleElements = index > 1 ? result[0].slice(index - 1) : result[0];
                     if (moduleElements.length > 0) {
+                        console.log(moduleElements);
                         changeModule(tabId);
                     }
                 }
