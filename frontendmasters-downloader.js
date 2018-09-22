@@ -30,7 +30,7 @@ var frontendmastersDownloader = function () {
         chromeApi.executeScript(tabId, script, function (result) {
             console.log(result);
             if (result && result.length > 0) {
-                if(result[0] != "") {
+                if (result[0] != "") {
                     chromeApi.downLoadVideo(result[0], `${videoName}.webm`, function (downloadId) {
                         currentDownloadId = downloadId;
                     });
@@ -53,8 +53,9 @@ var frontendmastersDownloader = function () {
         initiateDownload: function (tabId, url = "", startIndex = 1) {
             workingTabId = tabId;
             index = startIndex;
+            
             var getAllLessonsLinks = `Array.prototype.map.call(
-                document.querySelectorAll(".LessonList ol>li>a.lesson"), 
+                document.querySelectorAll(".FMPlayerLessonList .FMPlayerScrolling li>a.lesson"), 
                 (element) => element.href)`;
 
             chromeApi.addTabUpdateListener(onTabUpdated);
